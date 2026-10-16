@@ -3,7 +3,7 @@
 [![Vercel Deploy](https://img.shields.io/badge/Vercel-deployed-black?logo=vercel&logoColor=white)](https://zhar-coffee.vercel.app)
 [![Astro 5](https://img.shields.io/badge/Astro-5.18-orange?logo=astro&logoColor=white)](https://astro.build)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 > 🇰🇿 Спешиалти-кофейня в центре Астаны: эспрессо-бар, ручной фильтр, альтернатива на свежей обжарке, кухня и **бронь стола онлайн**.
 > Лендинг с минимумом JS, максимумом типографики и серверным API бронирования.
@@ -13,6 +13,10 @@
 ## 🖼 Превью / Preview
 
 [![Превью сайта ЖАР](https://api.microlink.io/?url=https%3A%2F%2Fzhar-coffee.vercel.app&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=720)](https://zhar-coffee.vercel.app)
+
+<img src="./public/og.jpg" width="1200" alt="ЖАР preview fallback">
+
+<sub>локальный фолбек если сервис превью недоступен</sub>
 
 | Ссылка | URL |
 |---|---|
@@ -61,6 +65,8 @@
 | Контент | Astro Content Collections + zod |
 | Адаптер | был `@astrojs/node` (standalone) → стал `@astrojs/vercel` |
 | Шрифты | Unbounded (display) + Inter Variable (body), fontsource |
+
+> 📌 **AGENTS.md** — правила сборки для MiMo Code агента, можно игнорировать для разработки.
 
 ---
 
