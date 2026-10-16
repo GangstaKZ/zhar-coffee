@@ -16,3 +16,6 @@ node_modules/
 npm-debug.log*
 preview.log
 .playwright-cli/
+
+.vercel
+.env*
