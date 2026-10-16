@@ -14,7 +14,7 @@ interface Props {
 
 const { title = site.nameFull, description = site.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:4321');
-const ogImage = new URL('/og-cover.svg', canonical);
+const ogImage = new URL('/og.jpg', canonical);
 
 const jsonLd = {
   '@context': 'https://schema.org',
