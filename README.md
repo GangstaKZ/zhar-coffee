@@ -12,11 +12,7 @@
 
 ## 🖼 Превью / Preview
 
-[![Превью сайта ЖАР](https://api.microlink.io/?url=https%3A%2F%2Fzhar-coffee.vercel.app&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=720)](https://zhar-coffee.vercel.app)
-
-<img src="./public/og.jpg" width="1200" alt="ЖАР preview">
-
-<sub>локальный фолбек если сервис превью недоступен</sub>
+<img src="./public/og.jpg" width="1200" alt="ЖАР — specialty coffee preview">
 
 | Ссылка | URL |
 |---|---|
@@ -24,8 +20,6 @@
 | 🔗 Короткий alias | https://zhar-coffee-sana-q.vercel.app |
 | 📋 Deployment Details | [vercel.com/sana-q/zhar-coffee/deployments](https://vercel.com/sana-q/zhar-coffee/deployments) |
 | 📦 GitHub | [github.com/GangstaKZ/zhar-coffee](https://github.com/GangstaKZ/zhar-coffee) |
-
-> Скриншот выше рендерится сервисом Microlink с живого прода при каждом обновлении README.
 
 ---
 
