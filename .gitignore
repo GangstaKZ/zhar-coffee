@@ -1,0 +1,18 @@
+# environment
+.env
+.env.production
+.env.local
+
+# build
+dist/
+.astro/
+.vercel/
+
+# deps
+node_modules/
+
+# misc
+.DS_Store
+npm-debug.log*
+preview.log
+.playwright-cli/

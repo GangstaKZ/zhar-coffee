@@ -1,0 +1,30 @@
+---
+const categories = [
+  { id: 'all', label: 'Все' },
+  { id: 'espresso', label: 'Эспрессо-бар' },
+  { id: 'filter', label: 'Фильтр' },
+  { id: 'alt', label: 'Альтернатива' },
+  { id: 'food', label: 'Еда' },
+];
+---
+
+<div
+  class="mb-10 flex flex-wrap gap-2"
+  role="tablist"
+  aria-label="Категории меню"
+  data-menu-tabs
+>
+  {
+    categories.map((cat, i) => (
+      <button
+        type="button"
+        role="tab"
+        aria-selected={i === 0 ? 'true' : 'false'}
+        data-tab={cat.id}
+        class="border border-ink/15 px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-400 ease-[var(--ease-out-fancy)] hover:border-brass hover:text-brass aria-selected:border-brass aria-selected:bg-brass aria-selected:text-night"
+      >
+        {cat.label}
+      </button>
+    ))
+  }
+</div>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  kicker?: string;
+  title: string;
+  number?: string;
+  align?: 'left' | 'center';
+}
+
+const { kicker, title, number, align = 'left' } = Astro.props;
+---
+
+<header class:list={['mb-10 sm:mb-14', align === 'center' && 'text-center']} data-reveal>
+  <div
+    class:list={[
+      'flex items-baseline gap-4',
+      align === 'center' && 'justify-center',
+    ]}
+  >
+    {
+      number && (
+        <span class="font-body text-xs tracking-[0.3em] text-brass tabular-nums select-none">
+          {number}
+        </span>
+      )
+    }
+    {
+      kicker && (
+        <span class="text-[0.7rem] font-medium tracking-[0.25em] uppercase text-ink-soft">
+          {kicker}
+        </span>
+      )}
+  </div>
+  <h2
+    class="mt-3 font-display text-[clamp(1.9rem,5vw,3.4rem)] leading-[1.05] font-semibold tracking-[-0.03em] text-balance"
+  >
+    {title}
+  </h2>
+  <slot />
+</header>

@@ -1,0 +1,54 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'ghost' | 'light';
+  type?: 'button' | 'submit';
+  class?: string;
+  disabled?: boolean;
+}
+
+const {
+  href,
+  variant = 'primary',
+  type = 'button',
+  class: className = '',
+  disabled = false,
+} = Astro.props;
+
+const base =
+  'btn-fill group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-[var(--ease-out-fancy)]';
+
+const variants = {
+  primary: 'bg-night text-paper hover:text-night border border-night',
+  ghost: 'border border-ink/25 text-ink hover:border-brass',
+  light: 'border border-paper/30 text-paper hover:border-brass hover:text-brass',
+};
+---
+
+{
+  type === 'submit' || disabled ? (
+    <button
+      type={type}
+      class:list={[base, variants[variant], className]}
+      disabled={disabled}
+    >
+      <slot />
+      <span
+        aria-hidden="true"
+        class="inline-block transition-transform duration-500 ease-[var(--ease-out-fancy)] group-hover:translate-x-1"
+      >
+        →
+      </span>
+    </button>
+  ) : (
+    <a href={href} class:list={[base, variants[variant], className]}>
+      <slot />
+      <span
+        aria-hidden="true"
+        class="inline-block transition-transform duration-500 ease-[var(--ease-out-fancy)] group-hover:translate-x-1"
+      >
+        →
+      </span>
+    </a>
+  )
+}

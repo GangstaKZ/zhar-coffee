@@ -1,0 +1,45 @@
+---
+import SectionShell from '../../layouts/SectionShell.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import BookingForm from './BookingForm.astro';
+import { site } from '../../lib/site';
+---
+
+<SectionShell id="booking" tone="night">
+  <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+    <div data-reveal>
+      <SectionHeading
+        number="03"
+        kicker="Бронирование"
+        title="Столик под вашу компанию"
+      />
+      <p class="max-w-md text-paper/70 leading-relaxed">
+        Заполните форму — подтвердим бронь звонком в течение 15 минут в рабочие
+        часы. Для компаний от 8 гостей звоните нам напрямую.
+      </p>
+
+      <dl class="mt-10 space-y-5 text-sm">
+        <div class="flex gap-3">
+          <dt class="w-24 shrink-0 text-paper/40">Телефон</dt>
+          <dd>
+            <a href={`tel:${site.phoneHref}`} class="transition-colors hover:text-brass"
+              >{site.phone}</a
+            >
+          </dd>
+        </div>
+        <div class="flex gap-3">
+          <dt class="w-24 shrink-0 text-paper/40">Часы</dt>
+          <dd>{site.hours}</dd>
+        </div>
+        <div class="flex gap-3">
+          <dt class="w-24 shrink-0 text-paper/40">Адрес</dt>
+          <dd>{site.address}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div data-reveal style="--reveal-delay: 120ms">
+      <BookingForm />
+    </div>
+  </div>
+</SectionShell>

@@ -1,0 +1,72 @@
+---
+import SectionShell from '../../layouts/SectionShell.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import Reveal from '../shared/Reveal.astro';
+
+const stats = [
+  { value: '2021', label: 'год открытия' },
+  { value: '4', label: 'лота в ротации' },
+  { value: '12ч', label: 'до чашки после обжарки' },
+  { value: '80+', label: 'скоринг SCA' },
+];
+---
+
+<SectionShell id="about">
+  <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+    <Reveal class="order-2 lg:order-1">
+      <SectionHeading
+        number="01"
+        kicker="Наша история"
+        title="Обжариваем для Астаны с 2021 года"
+      />
+      <div class="space-y-5 text-[1.02rem] leading-relaxed text-ink-soft">
+        <p>
+          Мы начали с маленькой обжарочной и одного вопроса: каким должен быть
+          кофе, чтобы его хотелось пить каждый день, но который каждый раз
+          удивлял. Ответ — свежая обжарка, прозрачные лоты и честный разговор с
+          бариста.
+        </p>
+        <p>
+          Каждый лот проходит куппинг на нашем столе, прежде чем попасть в
+          эспрессо-груп. Молоко — от местных фермеров, выпечка — каждое утро.
+          Мы не гонимся за количеством позиций: лучше четыре идеальных лота, чем
+          сорок посредственных.
+        </p>
+      </div>
+
+      <dl class="mt-10 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10">
+        {
+          stats.map((stat) => (
+            <div class="bg-paper px-5 py-6">
+              <dt class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold tabular-nums tracking-[-0.03em] text-coffee">
+                {stat.value}
+              </dt>
+              <dd class="mt-1 text-xs tracking-wide uppercase text-ink-soft/80">
+                {stat.label}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </Reveal>
+
+    <Reveal
+      class="order-1 photo-zoom relative aspect-[4/5] rounded-sm lg:order-2"
+      style="--reveal-delay: 150ms"
+    >
+      <img
+        src="/img/story.svg"
+        alt="Бариста готовит фильтр-кофе в кофейне ЖАР"
+        width="900"
+        height="1125"
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+      <div
+        class="pointer-events-none absolute inset-0 border border-ink/10 mix-blend-multiply"
+        aria-hidden="true"
+      >
+      </div>
+    </Reveal>
+  </div>
+</SectionShell>

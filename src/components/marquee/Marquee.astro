@@ -1,0 +1,27 @@
+---
+const items = [
+  'SPECIALTY COFFEE',
+  'ASTANA',
+  'SINGLE ORIGIN',
+  'V60',
+  'СВЕЖАЯ ОБЖАРКА',
+  'ESPRESSO BAR',
+  'AEROPRESS',
+  'ФИЛЬТР',
+  'COLD BREW',
+  'ЗЕРНО С ОТКРЫТЫМ ИСТОЧНИКОМ',
+];
+---
+
+<div class="marquee border-y border-ink/10 bg-paper py-4 text-ink" aria-hidden="true">
+  <div class="marquee-track">
+    {
+      [...items, ...items].map((item) => (
+        <span class="flex items-center whitespace-nowrap">
+          <span class="px-6 text-xs font-medium tracking-[0.35em] uppercase">{item}</span>
+          <span class="text-brass">✦</span>
+        </span>
+      ))
+    }
+  </div>
+</div>

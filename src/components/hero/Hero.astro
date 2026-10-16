@@ -1,0 +1,74 @@
+---
+import Button from '../shared/Button.astro';
+---
+
+<section id="top" class="relative flex min-h-[100svh] flex-col overflow-hidden bg-night text-paper">
+  <!-- Background -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <div class="photo-zoom absolute inset-0">
+      <img
+        src="/img/hero.svg"
+        alt=""
+        width="1920"
+        height="1080"
+        loading="eager"
+        fetchpriority="high"
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-night/75 via-night/55 to-night"
+    >
+    </div>
+    <div
+      class="absolute inset-0"
+      style="background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(23,18,15,0.55) 100%);"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pt-28 pb-20 sm:px-8">
+    <p
+      class="mb-6 text-[0.7rem] font-medium tracking-[0.3em] uppercase text-brass"
+      data-reveal
+    >
+      Спешиалти-кофейня · Астана
+    </p>
+
+    <h1
+      class="max-w-4xl font-display text-[clamp(2.4rem,7vw,5.8rem)] leading-[1.02] font-semibold tracking-[-0.035em]"
+      data-reveal
+      style="--reveal-delay: 100ms"
+    >
+      Кофе с характером <span class="text-brass">обжарки</span> и городом в
+      каждой чашке
+    </h1>
+
+    <p
+      class="mt-7 max-w-xl text-base leading-relaxed text-paper/70 sm:text-lg"
+      data-reveal
+      style="--reveal-delay: 200ms"
+    >
+      Сезонные лоты, ручной фильтр и эспрессо-бар в самом центре Астаны.
+      Заходите на чашку — остаётесь на разговор.
+    </p>
+
+    <div
+      class="mt-10 flex flex-wrap gap-4"
+      data-reveal
+      style="--reveal-delay: 300ms"
+    >
+      <Button href="#menu" variant="light">Смотреть меню</Button>
+      <Button href="#booking" variant="light">Забронировать стол</Button>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div
+    class="relative z-10 mb-8 hidden flex-col items-center gap-3 self-center text-[0.65rem] tracking-[0.3em] text-paper/40 uppercase sm:flex"
+    aria-hidden="true"
+  >
+    <span>Скролл</span>
+    <span class="scroll-hint-line block h-10 w-px bg-brass"></span>
+  </div>
+</section>

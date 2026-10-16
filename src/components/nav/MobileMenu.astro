@@ -1,0 +1,80 @@
+---
+import { navLinks, site } from '../../lib/site';
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 flex flex-col justify-center bg-night px-8 text-paper opacity-0 invisible transition-all duration-500 ease-[var(--ease-out-fancy)] md:hidden"
+  data-mobile-menu
+  hidden
+>
+  <nav class="flex flex-col gap-7" aria-label="Мобильная навигация">
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="font-display text-4xl font-medium tracking-[-0.02em] transition-colors hover:text-brass"
+          data-mobile-link
+        >
+          {link.label}
+        </a>
+      ))
+    }
+    <a
+      href="#booking"
+      class="mt-4 inline-flex w-fit items-center gap-2 border border-brass px-6 py-3.5 text-sm font-medium text-brass"
+      data-mobile-link
+    >
+      Забронировать стол →
+    </a>
+  </nav>
+  <div class="absolute bottom-8 left-8 text-sm text-paper/50">
+    <p>{site.address}</p>
+    <a href={`tel:${site.phoneHref}`} class="hover:text-brass">{site.phone}</a>
+  </div>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const top = document.querySelector<HTMLElement>('[data-burger-top]');
+  const bottom = document.querySelector<HTMLElement>('[data-burger-bottom]');
+  const links = document.querySelectorAll('[data-mobile-link]');
+
+  if (toggle && menu && top && bottom) {
+    let open = false;
+
+    const setOpen = (next: boolean) => {
+      open = next;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      toggle.classList.toggle('text-paper', open);
+      toggle.classList.toggle('relative', open);
+      toggle.classList.toggle('z-50', open);
+
+      if (open) {
+        menu.hidden = false;
+        requestAnimationFrame(() => {
+          menu.classList.remove('opacity-0', 'invisible');
+        });
+        top.style.transform = 'translateY(6.5px) rotate(45deg)';
+        bottom.style.transform = 'translateY(-6.5px) rotate(-45deg)';
+        document.body.style.overflow = 'hidden';
+      } else {
+        menu.classList.add('opacity-0', 'invisible');
+        top.style.transform = '';
+        bottom.style.transform = '';
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          if (!open) menu.hidden = true;
+        }, 500);
+      }
+    };
+
+    toggle.addEventListener('click', () => setOpen(!open));
+    links.forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open) setOpen(false);
+    });
+  }
+</script>

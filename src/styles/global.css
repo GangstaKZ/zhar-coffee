@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f6f1ea;
+  --color-paper-dim: #efe9e1;
+  --color-ink: #1c1714;
+  --color-ink-soft: #4a4038;
+  --color-coffee: #6f4e37;
+  --color-roast: #8b5e3c;
+  --color-brass: #b08d57;
+  --color-night: #17120f;
+  --color-night-soft: #241d18;
+
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+
+  --ease-out-fancy: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-brass);
+    color: var(--color-night);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ——— Grain overlay ——— */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* ——— Reveal on scroll ——— */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-out-fancy),
+    transform 0.9s var(--ease-out-fancy);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* ——— Marquee ——— */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 0;
+  animation: marquee-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ——— Button fill effect ——— */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-brass);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s var(--ease-out-fancy);
+}
+
+.btn-fill:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-fill:active {
+  transform: scale(0.98);
+}
+
+/* ——— Nav underline ——— */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.4s var(--ease-out-fancy);
+}
+
+.nav-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ——— Menu card ——— */
+.menu-card {
+  transition:
+    transform 0.55s var(--ease-out-fancy),
+    background-color 0.55s var(--ease-out-fancy),
+    border-color 0.55s var(--ease-out-fancy),
+    box-shadow 0.55s var(--ease-out-fancy);
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+}
+
+.menu-card:hover .menu-card-price {
+  color: var(--color-brass);
+}
+
+.menu-card:hover .menu-card-arrow {
+  transform: translateX(4px);
+}
+
+.menu-card-arrow {
+  transition: transform 0.45s var(--ease-out-fancy);
+}
+
+/* ——— Photo hover zoom ——— */
+.photo-zoom {
+  overflow: hidden;
+}
+
+.photo-zoom img,
+.photo-zoom .photo-inner {
+  transition: transform 0.8s var(--ease-out-fancy), filter 0.8s var(--ease-out-fancy);
+}
+
+.photo-zoom:hover img,
+.photo-zoom:hover .photo-inner {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+/* ——— Scroll hint ——— */
+@keyframes scroll-hint {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.scroll-hint-line {
+  animation: scroll-hint 2.2s var(--ease-out-fancy) infinite;
+}
+
+/* ——— Slot chips ——— */
+.slot-chip[aria-pressed="true"] {
+  background: var(--color-brass);
+  color: var(--color-night);
+  border-color: var(--color-brass);
+}
+
+/* ——— Spinner ——— */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 0.7s linear infinite;
+}

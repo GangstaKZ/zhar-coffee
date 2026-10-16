@@ -1,0 +1,59 @@
+---
+import { site } from '../../lib/site';
+import { navLinks } from '../../lib/site';
+---
+
+<footer class="border-t border-ink/10 bg-paper-dim">
+  <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+    <div class="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+      <div>
+        <a href="#top" class="font-display text-3xl font-semibold tracking-[-0.03em]"
+          >{site.name}</a
+        >
+        <p class="mt-2 max-w-xs text-sm leading-relaxed text-ink-soft">{site.tagline}</p>
+      </div>
+
+      <nav class="flex flex-col gap-2.5 text-sm" aria-label="Футер">
+        {
+          navLinks.map((link) => (
+            <a href={link.href} class="text-ink-soft transition-colors hover:text-brass">
+              {link.label}
+            </a>
+          ))
+        }
+        <a href="#booking" class="text-ink-soft transition-colors hover:text-brass"
+          >Бронирование</a
+        >
+      </nav>
+
+      <div class="flex flex-col gap-2.5 text-sm text-ink-soft">
+        <p>{site.address}</p>
+        <p>{site.hours}</p>
+        <a href={`tel:${site.phoneHref}`} class="transition-colors hover:text-brass"
+          >{site.phone}</a
+        >
+        <div class="mt-3 flex gap-4">
+          <a
+            href={site.social.telegram}
+            class="transition-colors hover:text-brass"
+            target="_blank"
+            rel="noopener noreferrer">Telegram</a
+          >
+          <a
+            href={site.social.instagram}
+            class="transition-colors hover:text-brass"
+            target="_blank"
+            rel="noopener noreferrer">Instagram</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-ink/10 pt-6 text-xs text-ink-soft/70 sm:flex-row sm:justify-between"
+    >
+      <p>© {new Date().getFullYear()} {site.name}. Все права защищены.</p>
+      <p>Астана · specialty coffee</p>
+    </div>
+  </div>
+</footer>

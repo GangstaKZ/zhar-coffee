@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b211a"/>
+      <stop offset="0.5" stop-color="#1c1511"/>
+      <stop offset="1" stop-color="#120d0a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.68" cy="0.3" r="0.55">
+      <stop offset="0" stop-color="#b08d57" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#8b5e3c" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#17120f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="steam" cx="0.5" cy="1" r="0.8">
+      <stop offset="0" stop-color="#f6f1ea" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#f6f1ea" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+
+  <!-- cup silhouette -->
+  <g transform="translate(1240 560)">
+    <ellipse cx="0" cy="200" rx="260" ry="46" fill="#0d0907" opacity="0.55"/>
+    <path d="M-170 -60 Q-180 140 -110 190 Q-30 245 90 205 Q170 165 175 40 L165 -60 Z" fill="#3a2c23"/>
+    <ellipse cx="0" cy="-60" rx="167" ry="52" fill="#4a3a2e"/>
+    <ellipse cx="0" cy="-62" rx="140" ry="40" fill="#171008"/>
+    <ellipse cx="0" cy="-64" rx="126" ry="34" fill="#5c3d27"/>
+    <path d="M168 -30 Q255 -20 255 60 Q255 140 175 150" fill="none" stroke="#3a2c23" stroke-width="34" stroke-linecap="round"/>
+    <!-- steam -->
+    <path d="M-60 -170 Q-90 -260 -40 -330 Q-5 -380 -35 -450" fill="none" stroke="url(#steam)" stroke-width="26" stroke-linecap="round" opacity="0.5"/>
+    <path d="M20 -185 Q-15 -270 35 -340 Q70 -395 35 -460" fill="none" stroke="url(#steam)" stroke-width="30" stroke-linecap="round" opacity="0.4"/>
+    <path d="M95 -165 Q70 -240 110 -300" fill="none" stroke="url(#steam)" stroke-width="22" stroke-linecap="round" opacity="0.3"/>
+  </g>
+
+  <!-- beans -->
+  <g fill="#2e211a" opacity="0.85">
+    <ellipse cx="330" cy="850" rx="58" ry="40" transform="rotate(-24 330 850)"/>
+    <path d="M300 826 Q330 850 360 874" stroke="#171008" stroke-width="6" fill="none"/>
+    <ellipse cx="470" cy="905" rx="52" ry="36" transform="rotate(14 470 905)"/>
+    <path d="M442 886 Q470 906 498 926" stroke="#171008" stroke-width="6" fill="none"/>
+    <ellipse cx="215" cy="935" rx="46" ry="32" transform="rotate(40 215 935)"/>
+    <path d="M190 912 Q215 934 240 956" stroke="#171008" stroke-width="5" fill="none"/>
+  </g>
+
+  <!-- vignette -->
+  <rect width="1920" height="1080" fill="none"/>
+</svg>

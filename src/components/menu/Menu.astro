@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import SectionShell from '../../layouts/SectionShell.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import MenuTabs from './MenuTabs.astro';
+import MenuItem from './MenuItem.astro';
+
+const categoryRank: Record<string, number> = {
+  espresso: 0,
+  filter: 1,
+  alt: 2,
+  food: 3,
+};
+
+const items = (await getCollection('menu')).sort(
+  (a, b) =>
+    (categoryRank[a.data.category] ?? 9) - (categoryRank[b.data.category] ?? 9) ||
+    a.data.order - b.data.order,
+);
+---
+
+<SectionShell id="menu" tone="paper-dim">
+  <SectionHeading
+    number="02"
+    kicker="Меню"
+    title="Что наливаем и подаём сегодня"
+  >
+    <p class="mt-4 max-w-xl text-ink-soft">
+      Цены в тенге. Молочные альтернативы — без доплаты. Зерно можно купить
+      с собой с нашей обжарки.
+    </p>
+  </SectionHeading>
+
+  <MenuTabs />
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-menu-grid>
+    {items.map((item, i) => <MenuItem item={item} index={i} />)}
+  </div>
+</SectionShell>

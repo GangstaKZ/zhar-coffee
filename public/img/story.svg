@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#8b5e3c"/>
+      <stop offset="0.55" stop-color="#6f4e37"/>
+      <stop offset="1" stop-color="#3d2b1f"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241d18"/>
+      <stop offset="1" stop-color="#17120f"/>
+    </linearGradient>
+    <radialGradient id="light" cx="0.3" cy="0.18" r="0.7">
+      <stop offset="0" stop-color="#f6f1ea" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#f6f1ea" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="900" height="1125" fill="url(#bg)"/>
+  <rect width="900" height="1125" fill="url(#light)"/>
+
+  <!-- espresso machine -->
+  <g transform="translate(160 330)">
+    <rect x="0" y="0" width="580" height="330" rx="26" fill="#1c1714"/>
+    <rect x="34" y="40" width="512" height="90" rx="14" fill="#2b231d"/>
+    <circle cx="90" cy="85" r="16" fill="#b08d57"/>
+    <circle cx="150" cy="85" r="16" fill="#8b5e3c"/>
+    <rect x="440" y="58" width="86" height="54" rx="8" fill="#3a2f26"/>
+    <!-- group heads -->
+    <rect x="120" y="170" width="130" height="46" rx="10" fill="#3a2f26"/>
+    <rect x="330" y="170" width="130" height="46" rx="10" fill="#3a2f26"/>
+    <rect x="165" y="216" width="40" height="66" fill="#241d18"/>
+    <rect x="375" y="216" width="40" height="66" fill="#241d18"/>
+    <!-- portafilter handles -->
+    <rect x="205" y="230" width="120" height="16" rx="8" fill="#4a3a2e" transform="rotate(8 205 230)"/>
+    <rect x="415" y="230" width="120" height="16" rx="8" fill="#4a3a2e" transform="rotate(8 415 230)"/>
+  </g>
+
+  <!-- counter -->
+  <rect x="0" y="700" width="900" height="80" fill="url(#bar)"/>
+  <rect x="0" y="780" width="900" height="345" fill="#2b211a"/>
+
+  <!-- cups on counter -->
+  <g fill="#f6f1ea">
+    <path d="M240 640 h84 v46 q0 26 -26 26 h-32 q-26 0 -26 -26 z" />
+    <path d="M324 650 q34 4 34 30 q0 26 -34 30" fill="none" stroke="#f6f1ea" stroke-width="10"/>
+    <path d="M560 655 h70 v38 q0 22 -22 22 h-26 q-22 0 -22 -22 z" opacity="0.85"/>
+  </g>
+
+  <!-- pendant lights -->
+  <g stroke="#17120f" stroke-width="6">
+    <line x1="200" y1="0" x2="200" y2="120"/>
+    <line x1="700" y1="0" x2="700" y2="90"/>
+  </g>
+  <circle cx="200" cy="150" r="42" fill="#b08d57" opacity="0.9"/>
+  <circle cx="700" cy="120" r="34" fill="#b08d57" opacity="0.75"/>
+  <circle cx="200" cy="150" r="66" fill="#b08d57" opacity="0.14"/>
+  <circle cx="700" cy="120" r="52" fill="#b08d57" opacity="0.12"/>
+</svg>

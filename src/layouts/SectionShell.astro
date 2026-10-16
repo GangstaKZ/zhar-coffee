@@ -1,0 +1,24 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  tone?: 'paper' | 'paper-dim' | 'night';
+}
+
+const { id, class: className = '', tone = 'paper' } = Astro.props;
+
+const toneClasses = {
+  paper: 'bg-paper text-ink',
+  'paper-dim': 'bg-paper-dim text-ink',
+  night: 'bg-night text-paper',
+};
+---
+
+<section
+  id={id}
+  class:list={['relative py-[clamp(4.5rem,10vw,8rem)]', toneClasses[tone], className]}
+>
+  <div class="mx-auto w-full max-w-6xl px-5 sm:px-8">
+    <slot />
+  </div>
+</section>

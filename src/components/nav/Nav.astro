@@ -1,0 +1,71 @@
+---
+import { navLinks, site } from '../../lib/site';
+import MobileMenu from './MobileMenu.astro';
+---
+
+<header
+  id="site-nav"
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[var(--ease-out-fancy)]"
+  data-nav
+>
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8 sm:py-5"
+  >
+    <a
+      href="#top"
+      class="font-display text-xl font-semibold tracking-[-0.02em] transition-colors hover:text-brass"
+      >{site.name}</a
+    >
+
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Основная навигация">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="nav-link text-sm font-medium tracking-wide text-ink-soft transition-colors hover:text-ink"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="#booking"
+        class="btn-fill hidden border border-ink bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors duration-300 hover:text-night sm:inline-flex"
+      >
+        Забронировать
+      </a>
+      <button
+        type="button"
+        class="flex h-10 w-10 items-center justify-center md:hidden"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span class="relative block h-3.5 w-6">
+          <span class="absolute inset-x-0 top-0 h-px bg-current transition-transform duration-300" data-burger-top></span>
+          <span class="absolute inset-x-0 bottom-0 h-px bg-current transition-transform duration-300" data-burger-bottom></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<MobileMenu />
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 24) {
+      nav.classList.add('backdrop-blur-md', 'bg-paper/85', 'border-b', 'border-ink/10');
+    } else {
+      nav.classList.remove('backdrop-blur-md', 'bg-paper/85', 'border-b', 'border-ink/10');
+    }
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

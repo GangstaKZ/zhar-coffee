@@ -1,0 +1,267 @@
+---
+import FormField from './FormField.astro';
+
+const today = new Date().toISOString().split('T')[0];
+const slots = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+---
+
+<form id="booking-form" class="flex flex-col gap-6" novalidate>
+  <!-- Honeypot -->
+  <div class="absolute -left-[9999px] top-0" aria-hidden="true">
+    <label for="company_url">Компания</label>
+    <input id="company_url" name="company_url" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <FormField id="name" label="Имя" required autocomplete="name" placeholder="Как к вам обращаться" />
+    <FormField
+      id="phone"
+      label="Телефон"
+      type="tel"
+      required
+      autocomplete="tel"
+      placeholder="+7 (7XX) XXX-XX-XX"
+    />
+  </div>
+
+  <FormField id="date" label="Дата" type="date" required min={today} />
+
+  <!-- Time chips -->
+  <div class="flex flex-col gap-2">
+    <span class="text-xs font-medium tracking-[0.15em] uppercase text-paper/60"
+      >Время <span class="text-brass">*</span></span
+    >
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Выбор времени" data-time-slots>
+      {
+        slots.map((slot) => (
+          <button
+            type="button"
+            class="slot-chip border border-paper/20 px-4 py-2.5 text-sm tabular-nums transition-all duration-300 hover:border-brass"
+            aria-pressed="false"
+            data-time={slot}
+          >
+            {slot}
+          </button>
+        ))
+      }
+    </div>
+    <input type="hidden" name="time" id="time" required />
+    <p class="text-sm text-red-400 opacity-0 transition-opacity duration-200" data-error-for="time" role="alert"></p>
+  </div>
+
+  <!-- Guests stepper -->
+  <div class="flex flex-col gap-2">
+    <span class="text-xs font-medium tracking-[0.15em] uppercase text-paper/60"
+      >Гости <span class="text-brass">*</span></span
+    >
+    <div class="flex w-fit items-center border border-paper/20">
+      <button
+        type="button"
+        class="px-5 py-3 text-lg transition-colors hover:text-brass"
+        data-guests-dec
+        aria-label="Меньше гостей">−</button
+      >
+      <span
+        class="w-14 text-center font-display text-lg tabular-nums"
+        data-guests-value
+        aria-live="polite">2</span
+      >
+      <button
+        type="button"
+        class="px-5 py-3 text-lg transition-colors hover:text-brass"
+        data-guests-inc
+        aria-label="Больше гостей">+</button
+      >
+    </div>
+    <input type="hidden" name="guests" id="guests" value="2" />
+    <p class="text-sm text-red-400 opacity-0 transition-opacity duration-200" data-error-for="guests" role="alert"></p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="comment" class="text-xs font-medium tracking-[0.15em] uppercase text-paper/60"
+      >Комментарий</label
+    >
+    <textarea
+      id="comment"
+      name="comment"
+      maxlength="300"
+      rows="3"
+      placeholder="Праздник, детский стул, аллергия…"
+      class="w-full resize-none border border-paper/20 bg-transparent px-4 py-3.5 text-paper placeholder:text-paper/30 transition-colors duration-300 focus:border-brass focus:outline-none"></textarea>
+    <p class="text-sm text-red-400 opacity-0 transition-opacity duration-200" data-error-for="comment" role="alert"></p>
+  </div>
+
+  <button
+    type="submit"
+    class="btn-fill mt-2 inline-flex items-center justify-center gap-3 border border-brass bg-brass px-8 py-4 font-medium tracking-wide text-night transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
+    data-submit
+  >
+    <span data-submit-label>Забронировать стол</span>
+    <span class="hidden spinner h-4 w-4 rounded-full border-2 border-night/30 border-t-night" data-spinner
+      aria-hidden="true"></span>
+  </button>
+
+  <p class="text-xs leading-relaxed text-paper/40">
+    Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Столик
+    подтверждаем звонком в течение 15 минут.
+  </p>
+</form>
+
+<!-- Success panel -->
+<div
+  class="hidden flex-col items-start gap-4 border border-brass/40 bg-night-soft p-8"
+  data-success-panel
+  role="status"
+>
+  <span class="text-3xl" aria-hidden="true">✦</span>
+  <h3 class="font-display text-2xl font-medium tracking-[-0.02em]">
+    Заявка отправлена
+  </h3>
+  <p class="text-paper/70">
+    Мы перезвоним в течение 15 минут и подтвердим бронь. До встречи в ЖАР!
+  </p>
+  <button
+    type="button"
+    class="border border-paper/30 px-6 py-3 text-sm transition-colors hover:border-brass hover:text-brass"
+    data-new-booking>Забронировать ещё</button
+  >
+</div>
+
+<script>
+  import { bookingSchema } from '../../lib/booking-schema';
+
+  const form = document.querySelector<HTMLFormElement>('#booking-form');
+  const successPanel = document.querySelector<HTMLElement>('[data-success-panel]');
+  const timeInput = document.querySelector<HTMLInputElement>('#time');
+  const guestsInput = document.querySelector<HTMLInputElement>('#guests');
+  const guestsValue = document.querySelector<HTMLElement>('[data-guests-value]');
+  const submitBtn = document.querySelector<HTMLButtonElement>('[data-submit]');
+  const spinner = document.querySelector<HTMLElement>('[data-spinner]');
+  const submitLabel = document.querySelector<HTMLElement>('[data-submit-label]');
+  const phoneInput = document.querySelector<HTMLInputElement>('#phone');
+
+  const loadedAt = Date.now();
+
+  const showError = (field: string, message: string) => {
+    const el = document.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+    const input = document.querySelector<HTMLElement>(`#${field}`);
+    if (el) {
+      el.textContent = message;
+      el.classList.toggle('opacity-0', !message);
+    }
+    input?.setAttribute('aria-invalid', message ? 'true' : 'false');
+  };
+
+  const clearErrors = () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-error-for]')
+      .forEach((el) => {
+        el.textContent = '';
+        el.classList.add('opacity-0');
+      });
+  };
+
+  /* — time chips — */
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-time-slots] [data-time]');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+      chip.setAttribute('aria-pressed', 'true');
+      if (timeInput) timeInput.value = chip.dataset.time ?? '';
+      showError('time', '');
+    });
+  });
+
+  /* — guests stepper — */
+  let guests = 2;
+  const renderGuests = () => {
+    if (guestsValue) guestsValue.textContent = String(guests);
+    if (guestsInput) guestsInput.value = String(guests);
+  };
+  document.querySelector('[data-guests-inc]')?.addEventListener('click', () => {
+    guests = Math.min(12, guests + 1);
+    renderGuests();
+  });
+  document.querySelector('[data-guests-dec]')?.addEventListener('click', () => {
+    guests = Math.max(1, guests - 1);
+    renderGuests();
+  });
+  renderGuests();
+
+  /* — phone mask — */
+  phoneInput?.addEventListener('input', () => {
+    let digits = phoneInput.value.replace(/\D/g, '');
+    if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+    if (!digits.startsWith('7')) digits = '7' + digits;
+    digits = digits.slice(0, 11);
+    let out = '+7';
+    if (digits.length > 1) out += ' (' + digits.slice(1, 4);
+    if (digits.length >= 4) out += ') ' + digits.slice(4, 7);
+    if (digits.length >= 7) out += '-' + digits.slice(7, 9);
+    if (digits.length >= 9) out += '-' + digits.slice(9, 11);
+    phoneInput.value = out;
+  });
+
+  /* — submit — */
+  const setBusy = (busy: boolean) => {
+    if (!submitBtn) return;
+    submitBtn.disabled = busy;
+    spinner?.classList.toggle('hidden', !busy);
+    if (submitLabel) submitLabel.textContent = busy ? 'Отправляем…' : 'Забронировать стол';
+  };
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get('name') ?? ''),
+      phone: String(fd.get('phone') ?? ''),
+      date: String(fd.get('date') ?? ''),
+      time: String(fd.get('time') ?? ''),
+      guests: Number(fd.get('guests') ?? 0),
+      comment: String(fd.get('comment') ?? ''),
+      company_url: String(fd.get('company_url') ?? ''),
+    };
+
+    const parsed = bookingSchema.safeParse(payload);
+    if (!parsed.success) {
+      for (const issue of parsed.error.issues) {
+        const field = String(issue.path[0] ?? '');
+        showError(field, issue.message);
+      }
+      const firstInvalid = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+      firstInvalid?.focus();
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const res = await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, _t: loadedAt }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.classList.add('hidden');
+      successPanel?.classList.remove('hidden');
+      successPanel?.classList.add('flex');
+    } catch {
+      showError('phone', 'Не отправилось — позвоните нам: +7 (747) 550-05-05');
+    } finally {
+      setBusy(false);
+    }
+  });
+
+  document.querySelector('[data-new-booking]')?.addEventListener('click', () => {
+    form?.reset();
+    if (timeInput) timeInput.value = '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    guests = 2;
+    renderGuests();
+    successPanel?.classList.add('hidden');
+    successPanel?.classList.remove('flex');
+    form?.classList.remove('hidden');
+  });
+</script>
