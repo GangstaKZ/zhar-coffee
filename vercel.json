@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/menu", "destination": "/#menu", "permanent": true },
+    { "source": "/contacts", "destination": "/#contacts", "permanent": true },
+    { "source": "/about", "destination": "/#about", "permanent": true },
+    { "source": "/booking", "destination": "/#booking", "permanent": true }
+  ]
+}
